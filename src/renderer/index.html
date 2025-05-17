@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Curso Navigator</title>
+  <style>
+    body {
+      background-color: #232432;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: #2e2f42;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #383a52;
+    }
+    
+    .title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background-color: #2e2f42;
+    }
+    
+    .search-container {
+      position: relative;
+      width: 200px;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 8px 10px 8px 30px;
+      border-radius: 4px;
+      border: none;
+      background-color: #383a52;
+      color: white;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ccc;
+    }
+    
+    .add-button {
+      background-color: #383a52;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .add-button:hover {
+      background-color: #4e5070;
+    }
+    
+    .profiles-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .profiles-table th {
+      background-color: #2e2f42;
+      padding: 10px 15px;
+      text-align: left;
+      border-bottom: 1px solid #383a52;
+    }
+    
+    .profiles-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #383a52;
+    }
+    
+    .execute-button {
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .execute-button:hover {
+      background-color: #16a085;
+    }
+    
+    .delete-button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    
+    .delete-button:hover {
+      background-color: #c0392b;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 100;
+    }
+    
+    .modal-content {
+      background-color: #2e2f42;
+      margin: 15% auto;
+      padding: 20px;
+      width: 400px;
+      border-radius: 5px;
+    }
+    
+    .modal-title {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #383a52;
+      background-color: #383a52;
+      color: white;
+      box-sizing: border-box;
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .button {
+      padding: 8px 15px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .button-primary {
+      background-color: #1abc9c;
+      color: white;
+    }
+    
+    .button-secondary {
+      background-color: #95a5a6;
+      color: white;
+    }
+    
+    .empty-message {
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">Curso Navigator</div>
+  </div>
+  
+  <div class="toolbar">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar perfis..." class="search-input" id="searchInput">
+    </div>
+    
+    <button class="add-button" id="addButton">+ Adicionar perfil</button>
+  </div>
+  
+  <table class="profiles-table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th></th>
+        <th>Notas</th>
+      </tr>
+    </thead>
+    <tbody id="profilesList">
+      <!-- Conteúdo dinâmico será inserido aqui -->
+    </tbody>
+  </table>
+  
+  <div id="addProfileModal" class="modal">
+    <div class="modal-content">
+      <h2 class="modal-title">Adicionar Novo Perfil</h2>
+      
+      <div class="form-group">
+        <label class="form-label">Nome:</label>
+        <input type="text" id="profileName" class="form-input" placeholder="Ex: Curso de JavaScript">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">URL:</label>
+        <input type="text" id="profileUrl" class="form-input" placeholder="Ex: https://meusite.com/curso">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Notas (opcional):</label>
+        <input type="text" id="profileNotes" class="form-input" placeholder="Ex: Módulo 3 em andamento">
+      </div>
+      
+      <div class="modal-footer">
+        <button class="button button-secondary" id="cancelButton">Cancelar</button>
+        <button class="button button-primary" id="saveButton">Salvar</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Importando os módulos do Electron
+    const { ipcRenderer } = require('electron');
+    
+    // Elementos da UI
+    const searchInput = document.getElementById('searchInput');
+    const addButton = document.getElementById('addButton');
+    const profilesList = document.getElementById('profilesList');
+    const addProfileModal = document.getElementById('addProfileModal');
+    const cancelButton = document.getElementById('cancelButton');
+    const saveButton = document.getElementById('saveButton');
+    const profileName = document.getElementById('profileName');
+    const profileUrl = document.getElementById('profileUrl');
+    const profileNotes = document.getElementById('profileNotes');
+    
+    // Estado da aplicação
+    let profiles = [];
+    
+    // Carregar perfis iniciais
+    loadProfiles();
+    
+    // Event Listeners
+    addButton.addEventListener('click', () => {
+      addProfileModal.style.display = 'block';
+    });
+    
+    cancelButton.addEventListener('click', () => {
+      addProfileModal.style.display = 'none';
+      clearForm();
+    });
+    
+    saveButton.addEventListener('click', saveProfile);
+    
+    searchInput.addEventListener('input', () => {
+      renderProfiles(filterProfiles(searchInput.value));
+    });
+    
+    // Funções da aplicação
+    async function loadProfiles() {
+      try {
+        profiles = await ipcRenderer.invoke('get-profiles');
+        renderProfiles(profiles);
+      } catch (error) {
+        console.error('Erro ao carregar perfis:', error);
+        showError('Não foi possível carregar os perfis. Tente reiniciar o aplicativo.');
+      }
+    }
+    
+    function renderProfiles(profilesArray) {
+      // Limpa a lista atual
+      profilesList.innerHTML = '';
+      
+      // Se não houver perfis, exibe mensagem
+      if (profilesArray.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td colspan="3" class="empty-message">
+            Nenhum perfil encontrado. Adicione seu primeiro perfil.
+          </td>
+        `;
+        profilesList.appendChild(row);
+        return;
+      }
+      
+      // Adiciona cada perfil à tabela
+      profilesArray.forEach(profile => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${profile.name}</td>
+          <td>
+            <button class="execute-button" data-id="${profile.id}">Executar</button>
+            <button class="delete-button" data-id="${profile.id}">Excluir</button>
+          </td>
+          <td>${profile.notes || ''}</td>
+        `;
+        
+        profilesList.appendChild(row);
+      });
+      
+      // Adiciona event listeners aos botões
+      document.querySelectorAll('.execute-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const profileId = e.target.getAttribute('data-id');
+          runProfile(profileId);
+        });
+      });
+      
+      document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const profileId = e.target.getAttribute('data-id');
+          deleteProfile(profileId);
+        });
+      });
+    }
+    
+    function filterProfiles(searchTerm) {
+      if (!searchTerm) return profiles;
+      
+      return profiles.filter(profile => 
+        profile.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        (profile.notes && profile.notes.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+    
+    async function saveProfile() {
+      const name = profileName.value.trim();
+      const url = profileUrl.value.trim();
+      const notes = profileNotes.value.trim();
+      
+      // Validação básica
+      if (!name) {
+        alert('O nome do perfil é obrigatório.');
+        return;
+      }
+      
+      if (!url) {
+        alert('O URL é obrigatório.');
+        return;
+      }
+      
+      // Garantir que o URL tem o formato correto
+      let finalUrl = url;
+      if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+        finalUrl = 'https://' + finalUrl;
+      }
+      
+      try {
+        // Salvar o perfil e atualizar a lista
+        profiles = await ipcRenderer.invoke('add-profile', { 
+          name, 
+          url: finalUrl, 
+          notes 
+        });
+        
+        renderProfiles(profiles);
+        addProfileModal.style.display = 'none';
+        clearForm();
+      } catch (error) {
+        console.error('Erro ao salvar o perfil:', error);
+        alert('Ocorreu um erro ao salvar o perfil. Tente novamente.');
+      }
+    }
+    
+    async function runProfile(profileId) {
+      try {
+        const success = await ipcRenderer.invoke('run-profile', profileId);
+        
+        if (!success) {
+          alert('Perfil não encontrado.');
+        }
+      } catch (error) {
+        console.error('Erro ao executar o perfil:', error);
+        alert('Erro ao abrir o Chrome. Verifique se o caminho está correto.');
+      }
+    }
+    
+    async function deleteProfile(profileId) {
+      if (confirm('Tem certeza que deseja excluir este perfil?')) {
+        try {
+          profiles = await ipcRenderer.invoke('delete-profile', profileId);
+          renderProfiles(profiles);
+        } catch (error) {
+          console.error('Erro ao excluir o perfil:', error);
+          alert('Ocorreu um erro ao excluir o perfil. Tente novamente.');
+        }
+      }
+    }
+    
+    function clearForm() {
+      profileName.value = '';
+      profileUrl.value = '';
+      profileNotes.value = '';
+    }
+    
+    function showError(message) {
+      alert(message);
+    }
+    
+    // Fechar o modal quando clicar fora dele
+    window.addEventListener('click', (e) => {
+      if (e.target === addProfileModal) {
+        addProfileModal.style.display = 'none';
+        clearForm();
+      }
+    });
+
+    // Quando a página carregar, verificar se há perfis
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('Página carregada, carregando perfis...');
+      loadProfiles();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+/* Resetando alguns estilos padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Estilo geral da página */
+body {
+  background-color: #232432;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Estilo do contêiner principal */
+#app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos do cabeçalho */
+.header {
+  background-color: #2e2f42;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #383a52;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Barra de ferramentas */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #2e2f42;
+}
+
+/* Campo de busca */
+.search-container {
+  position: relative;
+  width: 200px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 10px 8px 30px;
+  border-radius: 4px;
+  border: none;
+  background-color: #383a52;
+  color: white;
+}
+
+.search-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+}
+
+/* Botão de adicionar */
+.add-button {
+  background-color: #383a52;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.add-button:hover {
+  background-color: #4e5070;
+}
+
+/* Tabela de perfis */
+.profiles-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.profiles-table th {
+  background-color: #2e2f42;
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid #383a52;
+}
+
+.profiles-table td {
+  padding: 15px;
+  border-bottom: 1px solid #383a52;
+}
+
+/* Botão Executar */
+.execute-button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.execute-button:hover {
+  background-color: #16a085;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #2e2f42;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.modal-header {
+  margin-bottom: 15px;
+}
+
+.modal-title {
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #383a52;
+  background-color: #383a52;
+  color: white;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.button {
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-primary {
+  background-color: #1abc9c;
+  color: white;
+}
+
+.button-secondary {
+  background-color: #95a5a6;
+  color: white;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "curso-navigator",
+  "version": "1.0.0",
+  "description": "Gerenciador de perfis para cursos online",
+  "main": "src/main/index.js",
+  "author": {
+    "name": "Leo Santos",
+    "email": "seu-email@exemplo.com"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.leosantos.curso-navigator",
+    "productName": "Curso Navigator",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "dir"
+    },
+    "asar": true,
+    "forceCodeSigning": false
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "electron": "^25.3.1",
+    "electron-builder": "^24.4.0"
+  }
+}
